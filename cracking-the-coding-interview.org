@@ -1,0 +1,497 @@
+#+TITLE: Cracking the Coding Interview Questions
+
+* 1.1
+
+#+BEGIN_SRC python
+def unique_str(string):
+    for i in xrange(len(string)):
+        letter = string[i]
+        for j in xrange(i, len(string)):
+            if letter == string[j]:
+                return False
+    return True
+#+END_SRC
+
+* 1.2
+Given two strings, determine whether one is a permutation of the other.
+
+#+BEGIN_SRC python
+def is_permutation(s1, s2):
+    s1.sort()
+    s2.sort()
+    return s1 == s2
+#+END_SRC
+
+* 1.3
+
+URLify
+
+#+BEGIN_SRC java :classname Class
+public class Class {
+    public static void urlify(char[] chars, int trueLength) {
+        int lastCharIndex = trueLength - 1;
+        // move characters and replace ' ' with '%20'
+        int replacementIndex = chars.length - 1;
+        int spaceCount = 0;
+        for (int i = lastCharIndex; i >= 0; i--) {
+            char c = chars[i];
+            if (c == ' ') {
+                chars[replacementIndex--] = '0';
+                chars[replacementIndex--] = '2';
+                chars[replacementIndex--] = '%';
+                spaceCount++;
+            } else {
+                chars[replacementIndex--] = c;
+            }
+        }
+
+        // do a left trim
+        if (replacementIndex != -1) {
+            int newLength = trueLength + spaceCount * 3;
+            int startTrueIndex = chars.length - newLength;
+            int i;
+            for (i = 0; i < newLength; i++) {
+                chars[i] = chars[startTrueIndex++];
+            }
+
+
+            // Paul: "THEY'RE NOT NECESSARILY SPACES!!!!!"
+            // // pad with white space
+            // while (i < chars.length) {
+            //     chars[i++] = ' ';
+            // }
+        }
+    }
+
+    public static void main(String[] args) {
+        String s = "Mr John Smith   ";
+        char[] cs = s.toCharArray();
+
+        urlify(cs, 13);
+        System.out.println(cs);
+    }
+}
+#+END_SRC
+
+* 1.4
+
+#+BEGIN_SRC java
+public static boolean permuterPalindromeCheckerMethodInTheJavaProgrammingLanguage(String s) {
+    // generate all permutations
+    
+    // check if that is a palindrome
+}
+#+END_SRC
+
+
+Very bad solution: generates n! permutations
+#+BEGIN_SRC python :results output
+from itertools import permutations
+
+def is_a_permutation_a_palindrome(s):
+    ps = permutations(s)
+    # check if palindrome
+    for p in ps:
+        word = ''.join(p)
+        word = word.replace(' ', '')
+        word = word.lower()
+        if word == ''.join(reversed(word)):
+            return True
+    return False
+
+print is_a_permutation_a_palindrome("Atco act")
+#+END_SRC
+
+#+RESULTS:
+: True
+* 1.7 - Rotate Matrix
+
+#+BEGIN_SRC C
+void rotate_matrix(int** matrix) 
+#+END_SRC
+
+#+BEGIN_SRC java :classname Exercise1_7
+public class Exercise1_7 {
+    public static void rotateMatrix(int[][] matrix) {
+        int N = matrix.length;
+        int buffer;
+        int tmp;
+
+        for (int row = 0; row < N / 2; row++) {
+            for (int col = 0; col < (N + 1) / 2; col++) {
+                // top-left to bottom-left
+                buffer = matrix[N - 1 - col][row];
+                matrix[N - 1 - col][row] = matrix[row][col]; 
+
+                // bottom-left to bottom-right
+                tmp = matrix[N - 1 - row][N - 1 - col]; // BR
+                matrix[N - 1 - row][N - 1 - col] = buffer;
+                buffer = tmp;
+
+                // bottom-right to top-right
+                tmp = matrix[col][N - 1 - row]; // TR
+                matrix[col][N - 1 - row] = buffer;
+                buffer = tmp;
+
+                // top-right to top-left
+                matrix[row][col] = buffer;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int[][] matrix = {{1,2,3},
+                          {4,5,6},
+                          {7,8,9}};
+
+        int[][] expected = {{3,6,9},
+                            {2,5,8},
+                            {1,4,7}};
+
+        int[][] matrix2 = {{1,2,3,4},
+                           {5,6,7,8},
+                           {9,10,11,12},
+                           {13,14,15,16}};
+
+        print(matrix2);
+        System.out.println();
+        rotateMatrix(matrix2);
+        print(matrix2);
+    }
+
+    public static void print(int[][] m) {
+        for (int i = 0; i < m.length; i++) {
+            for (int j = 0; j < m[0].length; j++) {
+                System.out.print(m[i][j] + "\t");
+            }
+            System.out.println();
+        }
+    }
+}
+#+END_SRC
+
+#+RESULTS:
+|  1 |  2 |  3 |  4 |
+|  5 |  6 |  7 |  8 |
+|  9 | 10 | 11 | 12 |
+| 13 | 14 | 15 | 16 |
+|    |    |    |    |
+|  4 |  8 | 12 | 16 |
+|  3 |  7 | 11 | 15 |
+|  2 |  6 | 10 | 14 |
+|  1 |  5 |  9 | 13 |
+* 2.1 Remove Dups
+
+#+BEGIN_SRC python
+class Node:
+    
+    def __init__(self, data, next):
+        self.data = data;;
+        self.next = next;;
+
+# Uses temp buffer
+def remove_dups(ll):
+
+
+
+    
+    while ll is not None:
+        ll = ll.next
+
+        
+        
+    return elements
+#+END_SRC
+
+#+BEGIN_SRC java :classname Problem21
+public class Problem21
+{
+    static class Node<T> {
+        public T data;
+        public Node next;
+
+        public Node(T data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
+
+        public String toString() {
+            return data.toString();
+        }
+    }
+
+    public static <T> Node<T> removeDups(Node<T> data) {
+        Node<T> head, prev;
+        head = data;
+
+        while (head != null) {
+            prev = head;
+            while (prev != null) {
+                if (prev.next != null && head.data == prev.next.data) {
+                    prev.next = prev.next.next;
+                }
+                prev = prev.next;
+            }
+            head = head.next;
+        }
+        return data;
+    }
+
+    public static void printLL(Node ll) {
+        while (ll != null) {
+            System.out.print(ll.data);
+            ll = ll.next;
+        }
+    }
+
+    public static void main(String[] args) {
+        Node ll = new Node(1,
+                  new Node(2,
+                  new Node(2,
+                  new Node(3,
+                  new Node(3,
+                  new Node(2, null))))));
+        printLL(ll);
+        System.out.println();
+        printLL(removeDups(ll));
+    }
+}
+#+END_SRC
+
+#+RESULTS:
+| 122332 |
+|    123 |
+
+* 2.2 Return Kth to Last
+#+BEGIN_SRC java :classname Problem22
+public class Problem22
+{
+    static class Node<T> {
+        public T data;
+        public Node next;
+
+        public Node(T data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
+
+        public String toString() {
+            return data.toString();
+        }
+    }
+
+    public static <T> Node<T> kthToLast(Node head, int k) {
+        Node runner = head;
+
+        for (int i = 0; i < k; i++) {
+            head = head.next;
+        }
+
+        while (head != null) {
+            head = head.next;
+            runner = runner.next;
+        }
+        return runner;
+    }
+
+    public static void printLL(Node head) {
+        while (head != null) {
+            System.out.print(head.data);
+            head = head.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Node ll = new Node(1,
+                  new Node(2,
+                  new Node(3,
+                  new Node(4,
+                  new Node(5,
+                  new Node(6, null))))));
+        printLL(ll);
+        for (int k = 1; k <= 6; k++) {
+            System.out.println(
+            (kthToLast(ll, k).data));
+        }
+    }
+}
+#+END_SRC
+
+#+RESULTS:
+| 123456 |
+|      6 |
+|      5 |
+|      4 |
+|      3 |
+|      2 |
+|      1 |
+
+* 2.3 Delete Middle Node
+
+#+BEGIN_SRC java :classname Problem23
+public class Problem23
+{
+    static class Node<T> {
+        public T data;
+        public Node next;
+
+        public Node(T data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
+
+        public String toString() {
+            return data.toString();
+        }
+    }
+
+    public static void deleteMiddleNode(Node head, Node n) {
+        if (n == null) return;
+        while (head != null) {
+            if (head.next == n) {
+                head.next = head.next.next;
+                return;
+            }
+            head = head.next;
+        }
+    }
+
+    public static void printLL(Node head) {
+        while (head != null) {
+            System.out.print(head.data);
+            head = head.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Node n1 = new Node(1, null);
+        Node n2 = new Node(2, null);
+        Node n3 = new Node(3, null);
+        Node n4 = new Node(4, null);
+        Node n5 = new Node(5, null);
+        Node n6 = new Node(6, null);
+
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        n4.next = n5;
+        n5.next = n6;
+
+        Node head = n1;
+        printLL(head);
+        deleteMiddleNode(head, n4);
+        printLL(head);
+    }
+}
+#+END_SRC
+
+#+RESULTS:
+| 123456 |
+|  12356 |
+
+* 2.4 Partition
+#+BEGIN_SRC java :classname Problem24
+public class Problem24
+{
+    static class Node<T> {
+        public T data;
+        public Node next;
+
+        public Node(T data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
+
+        public String toString() {
+            return data.toString();
+        }
+    }
+
+    public static Node partition(Node head, int partition) {
+        Node currentHead = head;
+        while (head != null) {
+            // save for later since we'll lose it if the node needs to move
+            Node next = head.next;
+            
+            // next element needs to move to head
+            if (next != null && (int) next.data < partition) {
+
+                head.next = next.next;
+                next.next = currentHead;
+                currentHead = next;
+
+                next = head;
+            }
+            
+            head = next; // iterate to the next logical node from original list
+        }
+        return currentHead;
+    }
+
+    public static void printLL(Node head) {
+        while (head != null) {
+            System.out.print(head.data + " ");
+            head = head.next;
+        }
+        System.out.println();
+    }
+
+    public static void test1() {
+        Node n1 = new Node(3, null);
+        Node n2 = new Node(5, null);
+        Node n3 = new Node(8, null);
+        Node n4 = new Node(5, null);
+        Node n5 = new Node(10, null);
+        Node n6 = new Node(2, null);
+        Node n7 = new Node(1, null);
+
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        n4.next = n5;
+        n5.next = n6;
+        n6.next = n7;
+
+        Node head = n1;
+        printLL(head);
+        head = partition(head, 5);
+        printLL(head);
+    }
+
+    public static void test2() {
+        Node n1 = new Node(5, null);
+        Node n2 = new Node(1, null);
+        Node n3 = new Node(8, null);
+        Node n4 = new Node(5, null);
+        Node n5 = new Node(10, null);
+        Node n6 = new Node(2, null);
+        Node n7 = new Node(1, null);
+
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        n4.next = n5;
+        n5.next = n6;
+        n6.next = n7;
+
+        Node head = n1;
+        printLL(head);
+        head = partition(head, 5);
+        printLL(head);
+    }
+
+    public static void main(String[] args) {
+        test1();
+        test2();
+    }
+}
+#+END_SRC
+
+#+RESULTS:
+| 3 | 5 | 8 | 5 | 10 | 2 |  1 |
+| 1 | 2 | 3 | 5 |  8 | 5 | 10 |
+| 5 | 1 | 8 | 5 | 10 | 2 |  1 |
+| 1 | 2 | 1 | 5 |  8 | 5 | 10 |
+
